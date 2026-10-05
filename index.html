@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>VASU Sweets & Restaurant</title>
+<style>
+:root{--gold:#b8892e;--gold2:#d7b45a;--cream:#fbf7ed;--cream2:#f4ead4;--ink:#30291f;--muted:#7b7162;--line:#e6dcc7;--white:#fffdf8;--green:#2f6b45;--red:#9a3b2f;--shadow:0 8px 30px rgba(80,58,20,.08)}
+*{box-sizing:border-box}body{margin:0;background:var(--cream);color:var(--ink);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}
+button,input,textarea,select{font:inherit}button{cursor:pointer}
+.top{background:linear-gradient(135deg,#2e261a,#51422b);color:#fff;padding:20px max(18px,calc((100vw - 1220px)/2));display:flex;justify-content:space-between;align-items:center;gap:16px;box-shadow:0 4px 18px rgba(0,0,0,.12)}
+.brand{display:flex;align-items:center;gap:13px}.logo{width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg,var(--gold2),var(--gold));display:grid;place-items:center;color:#2e261a;font-weight:900;font-size:22px;box-shadow:inset 0 0 0 1px #fff5}
+.brand h1{font-family:Georgia,serif;font-size:24px;margin:0}.brand p{margin:3px 0 0;color:#eadfc9;font-size:13px}.userbox{display:flex;gap:9px;align-items:center;font-size:13px}.logout{background:#ffffff12;border:1px solid #ffffff35;color:#fff;padding:9px 13px;border-radius:10px}
+.wrap{max-width:1220px;margin:auto;padding:22px}.hidden{display:none!important}
+.auth{max-width:440px;margin:8vh auto;padding:28px;background:var(--white);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow)}.auth h2{font-family:Georgia,serif;margin:0 0 6px;font-size:28px}.auth p{color:var(--muted)}
+.tabs{display:flex;gap:8px;margin:20px 0 15px}.tabs button{flex:1;padding:11px;border:1px solid var(--line);background:var(--cream);border-radius:10px}.tabs .active{background:var(--gold);color:#fff;border-color:var(--gold)}
+label{font-size:12px;font-weight:700;letter-spacing:.02em;color:var(--muted);display:block;margin:10px 0 6px}input,textarea,select{width:100%;border:1px solid var(--line);border-radius:11px;padding:12px;background:#fffdf8;color:var(--ink);outline:none}input:focus,textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px #b8892e18}textarea{resize:vertical}
+.primary{width:100%;border:0;background:linear-gradient(135deg,var(--gold),#9c6f1e);color:#fff;padding:13px;border-radius:11px;font-weight:800}.msg{margin-top:10px;padding:10px;border-radius:10px;background:var(--cream2);color:#654c20;font-size:14px}
+.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:13px}.stat{background:var(--white);border:1px solid var(--line);border-radius:16px;padding:17px;box-shadow:var(--shadow)}.stat .l{font-size:12px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.05em}.stat .v{font-size:25px;font-weight:850;margin-top:7px}
+.grid{display:grid;grid-template-columns:1.1fr .9fr;gap:16px;margin-top:17px}.card{background:var(--white);border:1px solid var(--line);border-radius:17px;padding:19px;box-shadow:var(--shadow)}.title{font-family:Georgia,serif;font-size:19px;font-weight:800;margin-bottom:13px}.row{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px}.actions button{border:0;border-radius:10px;padding:11px 15px;background:#40372a;color:#fff}.actions .save{background:var(--green)}
+.nav{display:flex;gap:8px;margin-bottom:17px}.nav button{border:1px solid var(--line);background:var(--white);color:var(--ink);border-radius:10px;padding:10px 15px;font-weight:700}.nav button.active{background:var(--gold);color:#fff;border-color:var(--gold)}
+.tablewrap{overflow:auto}.table{width:100%;border-collapse:collapse;min-width:780px}.table th,.table td{padding:11px;border-bottom:1px solid var(--line);text-align:left;font-size:13px}.table th{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.04em}
+.entryLine{display:flex;justify-content:space-between;border-bottom:1px solid var(--line);padding:13px 0}.entryLine b{font-size:16px}.danger{background:var(--red)!important;color:#fff;border:0;border-radius:8px;padding:7px 9px}.smallbtn{background:#40372a;color:#fff;border:0;border-radius:8px;padding:7px 9px}
+.billbar{display:flex;justify-content:space-between;gap:12px;align-items:end;margin-bottom:14px}.billbar .actions{margin:0}.billbar .actions button{background:var(--gold)}
+@media(max-width:980px){.stats{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}}
+@media(max-width:600px){.top{padding:15px}.brand h1{font-size:19px}.logo{width:42px;height:42px}.userbox{flex-direction:column;align-items:flex-end}.wrap{padding:12px}.stats{grid-template-columns:1fr 1fr;gap:9px}.stat{padding:13px}.stat .v{font-size:20px}.row{grid-template-columns:1fr}.card{padding:14px}.billbar{align-items:stretch;flex-direction:column}}
+</style>
+</head>
+<body>
+<div id="authView" class="wrap">
+  <div class="auth">
+    <h2>VASU Sweets & Restaurant</h2>
+    <p style="color:#6b7280">Secure Shop Management</p>
+    <div class="tabs"><button id="loginTab" class="active" onclick="setAuth('login')">Login</button><button id="signupTab" onclick="setAuth('signup')">Create Account</button></div>
+    <label>Email</label><input id="email" type="email" placeholder="shop@example.com">
+    <label>Password</label><input id="password" type="password" placeholder="Password">
+    <button id="authBtn" class="primary" onclick="authAction()">Login</button>
+    <div id="authMsg" class="msg hidden"></div>
+  </div>
+</div>
+
+<div id="appView" class="hidden">
+<header class="top"><div class="brand"><h1>VASU Sweets & Restaurant</h1><p>Daily Shop Hisab</p></div><div class="userbox"><span id="userEmail"></span><button class="logout" onclick="logout()">Logout</button></div></header>
+<main class="wrap">
+  <div class="nav"><button id="navDash" class="active" onclick="showPage('dashboard')">🏠 Dashboard</button><button id="navHistory" onclick="showPage('history')">📅 Reports</button><button id="navReports" onclick="showPage('reports')">🧾 Monthly PDF</button></div>
+
+  <section id="dashboard">
+    <div class="stats">
+      <div class="stat"><div class="l">Total Sales</div><div class="v" id="totalSale">₹0</div></div>
+      <div class="stat"><div class="l">PhonePe / UPI</div><div class="v" id="totalUpi">₹0</div></div>
+      <div class="stat"><div class="l">Cash</div><div class="v" id="totalCash">₹0</div></div>
+      <div class="stat"><div class="l">Purchase</div><div class="v" id="totalPurchase">₹0</div></div>
+      <div class="stat"><div class="l">Net</div><div class="v" id="totalNet">₹0</div></div>
+    </div>
+    <div class="grid">
+      <div class="card">
+        <div class="title">Daily Entry</div>
+        <div class="row">
+          <div><label>Date</label><input id="entryDate" type="date"></div>
+          <div><label>Total Sales</label><input id="sale" type="number" min="0" step="0.01"></div>
+        </div>
+        <div class="row">
+          <div><label>PhonePe / UPI</label><input id="upi" type="number" min="0" step="0.01"></div>
+          <div><label>Cash</label><input id="cash" type="number" min="0" step="0.01"></div>
+        </div>
+        <div class="row">
+          <div><label>Today's Purchases</label><input id="purchase" type="number" min="0" step="0.01"></div>
+          <div><label>Extra Expenses</label><input id="expense" type="number" min="0" step="0.01"></div>
+        </div>
+        <label>Purchase Details</label><textarea id="details" rows="3" placeholder="Milk 500, Oil 700..."></textarea>
+        <label>Note</label><textarea id="note" rows="2"></textarea>
+        <div class="actions"><button class="save" onclick="saveEntry()">💾 Save / Update</button><button onclick="clearForm()">Clear</button></div>
+        <div id="saveMsg" class="msg hidden"></div>
+      </div>
+      <div class="card">
+        <div class="title">Today's Summary</div>
+        <div class="entryLine">Sale <b id="todaySale">₹0</b></div>
+        <div class="entryLine">PhonePe / UPI <b id="todayUpi">₹0</b></div>
+        <div class="entryLine">Cash <b id="todayCash">₹0</b></div>
+        <div class="entryLine">Purchase <b id="todayPurchase">₹0</b></div>
+        <div class="entryLine">Extra Expenses <b id="todayExpense">₹0</b></div>
+        <div class="entryLine" style="font-size:18px">Net <b id="todayNet">₹0</b></div>
+      </div>
+    </div>
+  </section>
+
+  
+<section id="reports" class="hidden">
+  <div class="card">
+    <div class="billbar">
+      <div><div class="title" style="margin-bottom:3px">Monthly Statement</div><div style="color:var(--muted);font-size:13px">Professional printable monthly billing report</div></div>
+      <div class="actions"><button onclick="generateMonthlyPDF()">Download Monthly PDF</button></div>
+    </div>
+    <div class="row">
+      <div><label>Month</label><input id="reportMonth" type="month"></div>
+      <div><label>Report Title</label><input id="reportTitle" value="VASU Sweets & Restaurant - Monthly Statement"></div>
+    </div>
+    <div id="monthlyPreview" style="margin-top:16px"></div>
+  </div>
+</section>
+<section id="history" class="hidden">
+    <div class="card">
+      <div class="title">📅 Monthly / Date-wise Reports</div>
+      <div class="row"><div><label>Filter date</label><input id="filterDate" type="date" onchange="renderHistory()"></div><div style="display:flex;align-items:end"><button class="primary" onclick="clearFilter()">All Dates</button></div></div>
+      <div class="tablewrap"><table class="table"><thead><tr><th>Date</th><th>Sale</th><th>PhonePe</th><th>Cash</th><th>Purchase</th><th>Expense</th><th>Net</th><th>Action</th></tr></thead><tbody id="historyBody"></tbody></table></div>
+    </div>
+  </section>
+</main>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+<script type="module">
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.58.0';
+
+const SUPABASE_URL = 'https://ummwampmzzligpfukqky.supabase.co';
+const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_MTZhccDgH0ENECSCbuK_DQ_yulC1Q-c';
+const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+let authMode='login', rows=[];
+
+const $=id=>document.getElementById(id);
+const money=n=>'₹'+Number(n||0).toLocaleString('en-IN',{maximumFractionDigits:2});
+const today=()=>new Date().toISOString().slice(0,10);
+
+window.setAuth=(m)=>{authMode=m;$('loginTab').classList.toggle('active',m==='login');$('signupTab').classList.toggle('active',m==='signup');$('authBtn').textContent=m==='login'?'Login':'Create Account';$('authMsg').classList.add('hidden')};
+window.authAction=async()=>{
+ const email=$('email').value.trim(), password=$('password').value;
+ if(!email||password.length<6){showMsg('authMsg','Enter email and a password with at least 6 characters');return}
+ let result;
+ if(authMode==='signup') result=await supabase.auth.signUp({email,password});
+ else result=await supabase.auth.signInWithPassword({email,password});
+ if(result.error){showMsg('authMsg',result.error.message);return}
+ if(authMode==='signup' && !result.data.session){showMsg('authMsg','Account created. Confirm your email, then login.');return}
+}
+window.logout=async()=>{await supabase.auth.signOut()};
+window.showPage=(p)=>{
+ $('dashboard').classList.toggle('hidden',p!=='dashboard');$('history').classList.toggle('hidden',p!=='history');$('reports').classList.toggle('hidden',p!=='reports');
+ $('navDash').classList.toggle('active',p==='dashboard');$('navHistory').classList.toggle('active',p==='history');$('navReports').classList.toggle('active',p==='reports');
+ if(p==='history')renderHistory();if(p==='reports'){if(!$('reportMonth').value)$('reportMonth').value=today().slice(0,7);renderMonthlyPreview()}
+};
+window.clearFilter=()=>{$('filterDate').value='';renderHistory()};
+window.clearForm=()=>{['sale','upi','cash','purchase','expense','details','note'].forEach(x=>$(x).value='');$('entryDate').value=today()};
+window.saveEntry=async()=>{
+ const e={entry_date:$('entryDate').value,total_sale:+$('sale').value||0,phonepe:+$('upi').value||0,cash:+$('cash').value||0,total_purchase:+$('purchase').value||0,extra_expense:+$('expense').value||0,purchase_details:$('details').value.trim()||null,note:$('note').value.trim()||null};
+ if(!e.entry_date){showMsg('saveMsg','Please select a date');return}
+ const {error}=await supabase.from('vasu_shop_daily_entries').upsert(e,{onConflict:'entry_date'});
+ if(error){showMsg('saveMsg',error.message);return}
+ showMsg('saveMsg','Saved to cloud successfully.');await loadData();loadDate(e.entry_date)
+}
+function showMsg(id,text){$(id).textContent=text;$(id).classList.remove('hidden');setTimeout(()=>$(id).classList.add('hidden'),5000)}
+async function loadData(){
+ const {data,error}=await supabase.from('vasu_shop_daily_entries').select('*').order('entry_date',{ascending:false});
+ if(error){console.error(error);return}
+ rows=data||[];renderTotals();renderHistory();
+}
+function renderTotals(){
+ const t=rows.reduce((a,e)=>{a.sale+=+e.total_sale;a.upi+=+e.phonepe;a.cash+=+e.cash;a.purchase+=+e.total_purchase;a.expense+=+e.extra_expense;return a},{sale:0,upi:0,cash:0,purchase:0,expense:0});
+ $('totalSale').textContent=money(t.sale);$('totalUpi').textContent=money(t.upi);$('totalCash').textContent=money(t.cash);$('totalPurchase').textContent=money(t.purchase);$('totalNet').textContent=money(t.sale-t.purchase-t.expense);
+ const d=rows.find(x=>x.entry_date===today())||{total_sale:0,phonepe:0,cash:0,total_purchase:0,extra_expense:0};
+ $('todaySale').textContent=money(d.total_sale);$('todayUpi').textContent=money(d.phonepe);$('todayCash').textContent=money(d.cash);$('todayPurchase').textContent=money(d.total_purchase);$('todayExpense').textContent=money(d.extra_expense);$('todayNet').textContent=money(d.total_sale-d.total_purchase-d.extra_expense);
+}
+function loadDate(date){const d=rows.find(x=>x.entry_date===date);$('entryDate').value=date;if(!d){['sale','upi','cash','purchase','expense','details','note'].forEach(x=>$(x).value='');return}$('sale').value=d.total_sale;$('upi').value=d.phonepe;$('cash').value=d.cash;$('purchase').value=d.total_purchase;$('expense').value=d.extra_expense;$('details').value=d.purchase_details||'';$('note').value=d.note||''}
+function renderHistory(){
+ const f=$('filterDate').value;const arr=f?rows.filter(x=>x.entry_date===f):rows;
+ $('historyBody').innerHTML=arr.length?arr.map(e=>`<tr><td>${e.entry_date}</td><td>${money(e.total_sale)}</td><td>${money(e.phonepe)}</td><td>${money(e.cash)}</td><td>${money(e.total_purchase)}</td><td>${money(e.extra_expense)}</td><td><b>${money(e.total_sale-e.total_purchase-e.extra_expense)}</b></td><td><button onclick="editRow('${e.entry_date}')">Edit</button> <button class="danger" onclick="deleteRow('${e.id}')">Delete</button></td></tr>`).join(''):'<tr><td colspan="8">No records found.</td></tr>'
+}
+window.editRow=(date)=>{showPage('dashboard');loadDate(date);window.scrollTo({top:0,behavior:'smooth'})}
+window.deleteRow=async(id)=>{if(!confirm('Delete this record?'))return;const {error}=await supabase.from('vasu_shop_daily_entries').delete().eq('id',id);if(error){alert(error.message);return}await loadData()}
+
+function monthRows(){
+ const m=$('reportMonth').value; return rows.filter(x=>x.entry_date.startsWith(m));
+}
+function renderMonthlyPreview(){
+ const arr=monthRows(); const t=arr.reduce((a,e)=>{a.sale+=+e.total_sale;a.upi+=+e.phonepe;a.cash+=+e.cash;a.purchase+=+e.total_purchase;a.expense+=+e.extra_expense;return a},{sale:0,upi:0,cash:0,purchase:0,expense:0});
+ $('monthlyPreview').innerHTML=`<div class="stats" style="grid-template-columns:repeat(3,1fr)"><div class="stat"><div class="l">Sales</div><div class="v">${money(t.sale)}</div></div><div class="stat"><div class="l">Purchases</div><div class="v">${money(t.purchase)}</div></div><div class="stat"><div class="l">Net</div><div class="v">${money(t.sale-t.purchase-t.expense)}</div></div></div><div style="margin-top:12px;color:var(--muted);font-size:13px">${arr.length} daily entries included.</div>`;
+}
+window.generateMonthlyPDF=()=>{
+ const arr=monthRows();const m=$('reportMonth').value;if(!m){alert('Select a month');return}
+ const {jsPDF}=window.jspdf;const doc=new jsPDF({unit:'mm',format:'a4'});const [y,mo]=m.split('-');const monthName=new Date(+y,+mo-1,1).toLocaleString('en-US',{month:'long',year:'numeric'});
+ doc.setFillColor(48,41,31);doc.rect(0,0,210,35,'F');doc.setTextColor(255,255,255);doc.setFont('helvetica','bold');doc.setFontSize(20);doc.text('VASU SWEETS & RESTAURANT',14,15);doc.setFontSize(10);doc.setFont('helvetica','normal');doc.text('MONTHLY SALES & PURCHASE STATEMENT',14,23);doc.text(monthName,196,23,{align:'right'});
+ const t=arr.reduce((a,e)=>{a.sale+=+e.total_sale;a.upi+=+e.phonepe;a.cash+=+e.cash;a.purchase+=+e.total_purchase;a.expense+=+e.extra_expense;return a},{sale:0,upi:0,cash:0,purchase:0,expense:0});
+ doc.setTextColor(48,41,31);doc.setFontSize(11);doc.text('Financial Summary',14,47);
+ doc.autoTable({startY:51,head:[['Total Sales','PhonePe / UPI','Cash','Total Purchases','Expenses','Net Result']],body:[[money(t.sale),money(t.upi),money(t.cash),money(t.purchase),money(t.expense),money(t.sale-t.purchase-t.expense)]],theme:'grid',headStyles:{fillColor:[184,137,46]},styles:{fontSize:8,halign:'center'}});
+ doc.autoTable({startY:75,head:[['Date','Sales','PhonePe / UPI','Cash','Purchases','Expenses','Net']],body:arr.map(e=>[e.entry_date,money(e.total_sale),money(e.phonepe),money(e.cash),money(e.total_purchase),money(e.extra_expense),money(e.total_sale-e.total_purchase-e.extra_expense)]),theme:'striped',headStyles:{fillColor:[184,137,46]},styles:{fontSize:8}});
+ const pageH=doc.internal.pageSize.height;doc.setFontSize(8);doc.setTextColor(120,110,95);doc.text('Generated from VASU Sweets & Restaurant Management App',14,pageH-10);doc.save(`VASU_Monthly_Statement_${m}.pdf`);
+};
+$('reportMonth')?.addEventListener('change',renderMonthlyPreview);
+async function boot(){
+ $('entryDate').value=today();
+ const {data:{session}}=await supabase.auth.getSession();setUI(session);
+ supabase.auth.onAuthStateChange((_event,session)=>setUI(session));
+}
+async function setUI(session){
+ if(session){$('authView').classList.add('hidden');$('appView').classList.remove('hidden');$('userEmail').textContent=session.user.email||'';await loadData();loadDate(today())}
+ else{$('authView').classList.remove('hidden');$('appView').classList.add('hidden')}
+}
+boot();
+</script>
+</body>
+</html>
